@@ -1,13 +1,14 @@
 // main.js
 
 import { Routing } from "../src/index.js"
-import { Counter } from "./components/Home.js"
-import { About } from "./components/About.js"
+import Joinning from "./pages/Joinning.js"
+import Waitting from "./pages/Waitting.js";
 
 const routes = {
-  
-  "/": Counter,
-  "/about": About,
+  // "/": Counter,
+  // "/about": About,
+  "/waiting": Waitting,
+  "/joining": Joinning,
 }
 
 const root = document.getElementById("root")

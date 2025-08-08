@@ -155,44 +155,48 @@ function diff(parent, newNode, oldNode) {
 }
 
 function updateAttributes(el, newAttrs, oldAttrs) {
+    if (!el) return; // ✅ SAFETY CHECK: don't crash if el is undefined
+
+    // Ensure _listeners map exists
+    el._listeners = el._listeners || {};
+
     // Remove old attributes and listeners
     for (const key of Object.keys(oldAttrs)) {
         if (!(key in newAttrs)) {
             if (key.startsWith("on") && typeof oldAttrs[key] === 'function') {
-                const event = key.slice(2).toLowerCase()
-                if (el._listeners && el._listeners[event]) {
-                    el.removeEventListener(event, el._listeners[event])
-                    delete el._listeners[event]
+                const event = key.slice(2).toLowerCase();
+                if (el._listeners[event]) {
+                    el.removeEventListener(event, el._listeners[event]);
+                    delete el._listeners[event];
                 }
             } else {
-                el.removeAttribute(key)
+                el.removeAttribute(key);
             }
         }
     }
 
     // Add/update attributes and listeners
-    el._listeners = el._listeners || {}
-
     for (const [key, value] of Object.entries(newAttrs)) {
-        if (key.startsWith("on") && typeof value == 'function') {
-            const event = key.slice(2).toLowerCase()
-            const oldListener = el._listeners[event]
+        if (key.startsWith("on") && typeof value === 'function') {
+            const event = key.slice(2).toLowerCase();
+            const oldListener = el._listeners[event];
 
             if (oldListener !== value) {
                 if (oldListener) {
-                    el.removeEventListener(event, oldListener)
+                    el.removeEventListener(event, oldListener);
                 }
-                el.addEventListener(event, value)
-                el._listeners[event] = value
+                el.addEventListener(event, value);
+                el._listeners[event] = value;
             }
-        }
-        else if (key === 'checked' || key === 'disabled' || key === 'selected') {
-            el[key] = !!value
+        } else if (key === 'checked' || key === 'disabled' || key === 'selected') {
+            el[key] = !!value;
         } else {
-            el.setAttribute(key, value)
+            el.setAttribute(key, value);
         }
     }
 }
+
+
 
 
 const Jsx = (obj) => {
