@@ -1,6 +1,7 @@
 import { CreateWs } from "../ws/Ws.js"
 import { state } from "../../src/index.js";
 
+
 function Joinning() {
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -12,9 +13,6 @@ function Joinning() {
                     type: "join",
                     username: state.get("username")
                 }))
-
-                // state.set('route', "/waitting");
-                // uding location hashe to change the route 
                 location.hash = "#/waiting";
             } catch (err) {
                 console.log(err);

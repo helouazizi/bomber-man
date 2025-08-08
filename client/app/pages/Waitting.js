@@ -2,11 +2,10 @@ import chat from "../components/chat.js"
 import counterRoom from "../components/counterRoom.js"
 import { state } from "../../src/index.js"
 
-function Waitting() {
-    const current = state.get('current_room')
-    console.log(current,"current");
-    
 
+function Waitting() {
+    const current = state.get('current_room')  
+    
     const displayPlayerNames = () => {
         return current?.players?.map(p => {
             return {

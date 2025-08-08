@@ -5,7 +5,7 @@ import { state } from "../../src/index.js";
 export const CreateWs = () => {
     return new Promise((resolve, reject) => {
         const [ws, setWs] = useState(new WebSocket("ws://localhost:8080/ws"))
-        
+
         ws.onopen = () => {
             console.log("🔗 WebSocket connection opened");
             state.set("ws", ws);
@@ -25,11 +25,12 @@ export const CreateWs = () => {
                     CounterObj.isInitialized = false
                     clearInterval(CounterObj.timer)
                     state.set('current_room', message.room)
+
                     break;
                 case "chating":
                     const messages = state.get('messages') || []; // get current messages
                     state.set('messages', [...messages, message]); // append new message
-                    const [messgess , setmessages] = useState(messages)
+                    const [messgess, setmessages] = useState(messages)
                     setmessages([...messages, message])
                     break;
                 case "userhange":
